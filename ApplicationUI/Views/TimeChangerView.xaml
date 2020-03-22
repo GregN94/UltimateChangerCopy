@@ -1,0 +1,139 @@
+﻿<UserControl
+    x:Class="ApplicationUI.Views.TimeChangerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:ApplicationUI.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:ApplicationUI.Views"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <local:TimeChangerViewModel />
+    </UserControl.DataContext>
+
+    <DockPanel Height="330">
+        <Calendar
+            SelectionMode="SingleDate"
+            IsTodayHighlighted="False"
+            x:Name="Calendar"
+            DockPanel.Dock="Left"
+            FirstDayOfWeek="Monday"
+            FontSize="24"
+            SelectedDate="{Binding SelectedDate}"/>
+
+        <Grid
+            x:Name="TimeSetter"
+            Margin="0,50,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            DockPanel.Dock="Top">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <RepeatButton
+                x:Name="AddHourButton"
+                Grid.Row="0"
+                Grid.Column="0"
+                Command="{Binding AddHourCommand}">
+                <iconPacks:PackIconMaterial Kind="ChevronUp" />
+            </RepeatButton>
+
+            <RepeatButton
+                x:Name="SubtractHourButton"
+                Grid.Row="2"
+                Grid.Column="0"
+                Command="{Binding SubtractHourCommand}">
+                <iconPacks:PackIconMaterial Kind="ChevronDown" />
+            </RepeatButton>
+
+            <StackPanel
+                x:Name="TimeDisplay"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Orientation="Horizontal">
+                <TextBox
+                    x:Name="HourDisplay"
+                    Width="70"
+                    HorizontalContentAlignment="Right"
+                    BorderThickness="0"
+                    FontSize="46"
+                    IsUndoEnabled="True"
+                    MaxLength="2"
+                    PreviewTextInput="NumberValidationTextBox"
+                    Text="{Binding Hour}" />
+                <Label
+                    x:Name="TimeDivider"
+                    BorderThickness="0"
+                    Content=":"
+                    FontSize="46" />
+                <TextBox
+                    x:Name="MinutesDisplay"
+                    Width="70"
+                    HorizontalContentAlignment="Left"
+                    BorderThickness="0"
+                    FontSize="46"
+                    IsUndoEnabled="True"
+                    MaxLength="2"
+                    PreviewTextInput="NumberValidationTextBox"
+                    Text="{Binding Minute}" />
+            </StackPanel>
+
+            <RepeatButton
+                x:Name="AddMinuteButton"
+                Grid.Row="0"
+                Grid.Column="2"
+                Command="{Binding AddMinuteCommand}">
+                <iconPacks:PackIconMaterial Kind="ChevronUp" />
+            </RepeatButton>
+
+            <RepeatButton
+                x:Name="SubtractMinuteButton"
+                Grid.Row="2"
+                Grid.Column="2"
+                Command="{Binding SubtractMinuteCommand}">
+                <iconPacks:PackIconMaterial Kind="ChevronDown" />
+            </RepeatButton>
+        </Grid>
+
+        <StackPanel Margin="35" Orientation="Horizontal">
+            <Button
+                x:Name="ApplyChangesButton"
+                Width="80"
+                Height="50"
+                Margin="0,0,10,0"
+                Background="LimeGreen"
+                Command="{Binding ApplyChangeCommand}" CommandParameter="{Binding}"
+                Content="Apply"
+                FontSize="22"
+                FontWeight="SemiBold"
+                Style="{StaticResource HoverButton}" />
+
+            <Button
+                x:Name="ResetTimeButton"
+                Width="80"
+                Height="50"
+                Background="Red"
+                Command="{Binding ResetTimeCommand}"
+                Content="Reset"
+                FontSize="22"
+                FontWeight="SemiBold"
+                Style="{StaticResource HoverButton}" />
+        </StackPanel>
+    </DockPanel>
+
+</UserControl>

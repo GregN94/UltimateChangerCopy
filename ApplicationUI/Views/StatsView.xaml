@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ApplicationUI.Views.StatsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:properties="clr-namespace:ApplicationUI.Properties"
+             xmlns:views="clr-namespace:ApplicationUI.Views"
+             xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
+             DataContext="{Binding Mediator.StatsViewModel, Source={StaticResource Locator}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+
+       </Grid.RowDefinitions>
+
+
+            <DVC:Chart Canvas.Top="80" Canvas.Left="10" Name="mcChart" Title="How many days is used" 
+           Width="400" Height="250"
+           Background="LightSteelBlue" Grid.ColumnSpan="2">
+                <DVC:Chart.Series>
+                    <DVC:ColumnSeries Title="FS" 
+                                      ItemsSource="{Binding MyStats}"
+                                      IndependentValueBinding="{Binding Path=Key}"
+                                      DependentValueBinding="{Binding Path=Value}"/>
+
+
+                </DVC:Chart.Series>
+                
+            </DVC:Chart>
+
+            <Button Grid.Column="3" Content="Refresh" Command="{Binding RefreshCommand}" />
+
+        </Grid>
+
+    </StackPanel>
+</UserControl>

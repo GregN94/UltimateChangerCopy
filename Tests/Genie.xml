@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<FS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProcessFSManager>
+    <eventHandled>false</eventHandled>
+    <elapsedTime>0</elapsedTime>
+    <StartProcessTimeUninstall>0001-01-01T00:00:00</StartProcessTimeUninstall>
+    <ElapsedTimeUninstall>0</ElapsedTimeUninstall>
+    <InstallationStatus>false</InstallationStatus>
+  </ProcessFSManager>
+  <ID>0</ID>
+  <paths xsi:type="OticonPaths">
+    <ManufacturerInfo>C:\ProgramData\Oticon\Common\ManufacturerInfo.xml</ManufacturerInfo>
+    <log4net>C:\ProgramData\Oticon\Genie2\Configure.log4net</log4net>
+    <log4net_Legacy>C:\Program Files (x86)\Oticon\Genie\Genie2\Configure.log4net</log4net_Legacy>
+    <exe>C:\Program Files (x86)\Oticon\Genie\Genie2\Genie.exe</exe>
+    <uninstall>C:\ProgramData\Package Cache\{7cabcd31-1487-4f47-b818-d2368ebf912c}\Install.exe</uninstall>
+    <ApplicationVersion>C:\ProgramData\Oticon\Genie2\ApplicationVersion.xml</ApplicationVersion>
+    <Trashes>
+      <string>C:\ProgramData\Oticon</string>
+      <string>C:\Program Files (x86)\Oticon</string>
+    </Trashes>
+  </paths>
+  <ManufacturerInfo>
+    <Brand>Oticon</Brand>
+    <Market>
+      <ShortName>PL</ShortName>
+      <LongName />
+    </Market>
+    <version />
+    <versionString>9.0.267.0</versionString>
+  </ManufacturerInfo>
+  <installed>true</installed>
+  <Installed1>true</Installed1>
+</FS>

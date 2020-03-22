@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="ApplicationUI.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:ApplicationUI.Views"
+             xmlns:views1="clr-namespace:ApplicationUI.Views.Settings"
+             mc:Ignorable="d">
+
+    <TabControl TabStripPlacement="Left">
+        <TabItem Header="General">
+            <views:GeneralSettingsView></views:GeneralSettingsView>
+        </TabItem>
+        <TabItem Header="Installation">
+            <views1:InstallationSettingsView></views1:InstallationSettingsView>
+        </TabItem>
+        <TabItem Header="Logs">
+            <views1:LogsSettingsView></views1:LogsSettingsView>
+        </TabItem>
+        <TabItem Header="About">
+            <views1:InfoSettingsView></views1:InfoSettingsView>
+        </TabItem>
+    </TabControl>
+
+</UserControl>

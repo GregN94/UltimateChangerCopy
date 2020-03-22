@@ -1,0 +1,177 @@
+﻿<UserControl
+    x:Class="ApplicationUI.Views.AnimatedView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ApplicationUI.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:ApplicationUI.Views"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <Style x:Key="WrapTabControl" TargetType="{x:Type TabControl}">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid
+                            ClipToBounds="true"
+                            KeyboardNavigation.TabNavigation="Local"
+                            SnapsToDevicePixels="true">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="ColumnDefinition0" />
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="RowDefinition0" Height="Auto" />
+                                <RowDefinition x:Name="RowDefinition1" Height="*" />
+                            </Grid.RowDefinitions>
+                            <WrapPanel
+                                x:Name="HeaderPanel"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                IsItemsHost="true" />
+                            <Border
+                                x:Name="ContentPanel"
+                                Grid.Row="1"
+                                Grid.Column="0">
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    Margin="0,2,0,0"
+                                    ContentSource="SelectedContent"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TabStripPlacement" Value="Left">
+                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
+                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
+                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
+                                <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
+                                <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
+                                <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
+                                <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                                <Setter TargetName="HeaderPanel" Property="Margin" Value="2,2,0,2" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomTabItem" TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+
+                        <Border Name="Border" Padding="7">
+                            <ContentPresenter
+                                x:Name="ContentSite"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ContentSource="Header" />
+                        </Border>
+
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MahApps.Brushes.Accent}" />
+                                <Setter TargetName="Border" Property="Opacity" Value="1.0" />
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                    <Condition Property="IsSelected" Value="False" />
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter TargetName="Border" Property="Opacity" Value="0.8" />
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <TabControl Style="{StaticResource WrapTabControl}">
+
+        <TabItem x:Name="InstallationTab" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="Installation" />
+            </TabItem.Header>
+            <views:BasicInstallationView />
+        </TabItem>
+
+        <TabItem x:Name="TimeChangeTab" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="Time" />
+            </TabItem.Header>
+            <views:TimeChangerView HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+
+        <TabItem x:Name="RandomHiTab" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="Random HI" />
+            </TabItem.Header>
+            <views:TeamTestsRandomizerVIew />
+        </TabItem>
+
+        <TabItem x:Name="ReadWriteHI" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="Read/Write HI" />
+            </TabItem.Header>
+        </TabItem>
+
+        <TabItem x:Name="StatsTab" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="My Statistics" />
+            </TabItem.Header>
+            <views:StatsView />
+            
+        </TabItem>
+
+        <TabItem x:Name="SettingsTab" Style="{StaticResource CustomTabItem}">
+            <TabItem.Header>
+                <TextBlock
+                    FontSize="19"
+                    FontWeight="DemiBold"
+                    Text="Settings" />
+            </TabItem.Header>
+            <views:SettingsView />
+        </TabItem>
+
+    </TabControl>
+
+
+</UserControl>

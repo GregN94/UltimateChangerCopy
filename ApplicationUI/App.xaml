@@ -1,0 +1,64 @@
+﻿<Application x:Class="ApplicationUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ApplicationUI.ViewModels"
+             xmlns:views="clr-namespace:ApplicationUI.Views"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             StartupUri="Views/ApplicationView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/themes/dark.violet.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+
+                <ResourceDictionary>
+                    <local:ViewModelLocator x:Key="Locator"/>
+                    
+                    <DataTemplate DataType="{x:Type local:LoadingViewModel}">
+                        <views:LoadingView/>
+                    </DataTemplate>
+                                        
+                    <DataTemplate DataType="{x:Type local:FailedLoadingViewModel}">
+                        <views:FailedLoadingView/>
+                    </DataTemplate>
+                </ResourceDictionary>
+                
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="HoverTile" TargetType="mah:Tile">
+                <Setter Property="FontSize" Value="12"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HoverButton" 
+                   TargetType="Button" 
+                   BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

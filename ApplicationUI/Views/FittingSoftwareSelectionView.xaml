@@ -1,0 +1,275 @@
+﻿<UserControl
+    x:Class="ApplicationUI.Views.FittingSoftwareSelectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:Mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:converters="clr-namespace:ApplicationUI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:ApplicationUI.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:ApplicationUI.Views"
+    Dialog:DialogParticipation.Register="{Binding}"
+    DataContext="{Binding Mediator.FittingSoftwareSelectionViewModel, Source={StaticResource Locator}}"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:BrandNameToImageConverter x:Key="BrandNameToImageConverter" />
+        <converters:SelectedToTicknessConverter x:Key="SelectedToTicknessConverter" />
+
+        <DataTemplate DataType="{x:Type local:FittingSoftwareSelectionViewModel}">
+            <views:FittingSoftwareSelectionView />
+        </DataTemplate>
+
+        <Style
+            x:Key="BrandTile"
+            BasedOn="{StaticResource HoverTile}"
+            TargetType="Mah:Tile">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="{Binding Value.Name, Converter={StaticResource BrandNameToImageConverter}}" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="IsEnabled" Value="{Binding Value.Installed}" />
+            <Setter Property="BorderBrush" Value="Tomato" />
+
+            <Setter Property="BorderThickness" Value="{Binding Path=Selected, Converter={StaticResource SelectedToTicknessConverter}}" />
+
+        </Style>
+
+        <Style x:Key="OverviewTextBox" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+        </Style>
+
+        <Style x:Key="OverviewComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="MaxDropDownHeight" Value="250" />
+            <Setter Property="Width" Value="70" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <ItemsControl x:Name="SelectionPanel" ItemsSource="{Binding FittingSoftwares}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <Mah:Tile
+                        MaxWidth="{Binding ActualHeight, ElementName=FittingSoftwareOverview}"
+                        MaxHeight="{Binding ActualHeight, ElementName=FittingSoftwareOverview}"
+                        Style="{StaticResource BrandTile}"
+                        >
+                        <Mah:ProgressRing
+                                x:Name="Progress"
+                                Width="80"
+                                Margin="20" 
+                                    IsActive="{Binding Value.FSRunningStatus}"                          
+                                />
+                        <Mah:Tile.InputBindings>
+                            <MouseBinding
+                                Command="{Binding DataContext.RunCommand, Source={x:Reference SelectionPanel}}"
+                                CommandParameter="{Binding Value}"
+                                Gesture="LeftDoubleClick" />
+
+                            <MouseBinding
+                                Command="{Binding DataContext.SelectCommand, Source={x:Reference SelectionPanel}}"
+                                CommandParameter="{Binding Value}"
+                                Gesture="LeftClick" />
+
+                            <MouseBinding
+                                Command="{Binding DataContext.AddSelectionCommand, Source={x:Reference SelectionPanel}}"
+                                CommandParameter="{Binding Value}"
+                                Gesture="CTRL+LeftClick" />
+
+                            <MouseBinding
+                                Command="{Binding DataContext.SelectRangeCommand, Source={x:Reference SelectionPanel}}"
+                                CommandParameter="{Binding Value}"
+                                Gesture="SHIFT+LeftClick" />
+                        </Mah:Tile.InputBindings>
+
+                        <Mah:Tile.ContextMenu>
+                            <ContextMenu Width="200">
+
+                                <MenuItem Command="{Binding DataContext.RunCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Foreground="LimeGreen" Kind="Play" />
+                                            <TextBlock Text=" Run" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding DataContext.KillCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Foreground="Red" Kind="Cancel" />
+                                            <TextBlock Text=" Kill" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding DataContext.DeleteLogsCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Foreground="Red" Kind="Delete" />
+                                            <TextBlock Text=" Delete Logs" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding DataContext.UninstallCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconEntypo Foreground="LightGray" Kind="Uninstall" />
+                                            <TextBlock Text=" Uninstall" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+
+                                <MenuItem Command="{Binding DataContext.CopyCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconOcticons Foreground="RosyBrown" Kind="Clippy" />
+                                            <TextBlock Text=" Copy To Clipboard" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding DataContext.OpenExplorerCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconFontAwesome Foreground="Goldenrod" Kind="FolderOpenSolid" />
+                                            <TextBlock Text=" Open in File Explorer" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Command="{Binding DataContext.OpenConfigCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconOcticons Foreground="LightBlue" Kind="File" />
+                                            <TextBlock Text=" Open in File Editor" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Mah:Tile.ContextMenu>
+                    </Mah:Tile>
+
+                    <StackPanel
+                        x:Name="FittingSoftwareOverview"
+                        MaxHeight="{Binding ActualHeight, ElementName=FittingSoftwareOverview}"
+                        Margin="-3,3,3,3"
+                        Background="Gray">
+                              
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="Market:" />
+
+                            <ComboBox
+                                x:Name="MarketBox"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                IsEnabled="{Binding Value.Installed}"
+                                ItemsSource="{Binding Value.ManufacturerInfo.Market.MarketShortNames}"
+                                SelectedItem="{Binding Value.ManufacturerInfo.Market.ShortName}"
+                                Style="{StaticResource OverviewComboBox}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.ChangeMarketCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="Log level:" />
+                            <ComboBox
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                IsEnabled="{Binding Value.Installed}"
+                                ItemsSource="{Binding DataContext.LogLeves, Source={x:Reference SelectionPanel}}"
+                                SelectedItem="{Binding Value.LogLevel}"
+                                Style="{StaticResource OverviewComboBox}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.ChangeLogLevelCommand, Source={x:Reference SelectionPanel}}" CommandParameter="{Binding Value}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="Version:" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="{Binding Value.ManufacturerInfo.version}" 
+                                FontSize="15"/>
+
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="Build type:" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="{Binding Value.ManufacturerInfo.BuildType}" 
+                                />
+
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="Status:" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="2"
+                                Style="{StaticResource OverviewTextBox}"
+                                Text="{Binding Value.FsStatus}" 
+                                />
+
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+
+</UserControl>

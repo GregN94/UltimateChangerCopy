@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="ApplicationUI.Views.Settings.InstallationSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ApplicationUI.Views.Settings"
+             xmlns:properties="clr-namespace:ApplicationUI.Properties"
+             xmlns:Mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             DataContext="{Binding Mediator.InstallationSettingsViewModel, Source={StaticResource Locator}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <StackPanel>
+        <StackPanel>
+            <Label Content="Installation Path" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+            <TextBox
+                x:Name="txtInstallationPath"
+                Text="{Binding Source = {x:Static properties:Settings.Default}, Path=InstallationPaths}"
+                Margin="15"
+                KeyDown="TextBox_Enter"
+                ToolTip="Enter to save new path"
+                HorizontalAlignment="Left"
+                Width="450"
+                 />
+        </StackPanel>
+        <Mah:ToggleSwitch
+                x:Name="UCStartToggle"
+                Margin="15"
+                Grid.Row="0"
+                DockPanel.Dock="Top"
+                Header="Installation mode"
+                OnContent="Silent"
+                OffContent="UI"
+                Command="{Binding ToggleUImodeCommand}"
+                IsOn="{Binding Source = {x:Static properties:Settings.Default}, Path=SilentMode}"
+                Style="{StaticResource MahApps.Styles.ToggleSwitch}" />
+
+        <Mah:ToggleSwitch
+                x:Name="LogLevelAllAfterInstallToggle"
+                Margin="15"
+                Grid.Row="0"
+                DockPanel.Dock="Top"
+                Header="Set log level to All after installation"
+                OnContent="On"
+                OffContent="Off"
+                Command="{Binding ToggleAllInstallation}"
+                IsOn="{Binding Source = {x:Static properties:Settings.Default}, Path=AllLevelModeInstallation}"
+                Style="{StaticResource MahApps.Styles.ToggleSwitch}" />
+
+    </StackPanel>
+</UserControl>

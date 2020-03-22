@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ApplicationUI.Views.Settings.LogsSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ApplicationUI.Views.Settings"
+             xmlns:properties="clr-namespace:ApplicationUI.Properties"
+             xmlns:Mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             DataContext="{Binding Mediator.LogsSettingsViewModel, Source={StaticResource Locator}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+
+
+            <Mah:ToggleSwitch
+                x:Name="AllModeLogsToggle"
+                Margin="15"
+                Grid.Row="0"
+                DockPanel.Dock="Top"
+                Header="Set log level to ALL"
+                ToolTip="For all installed FS Log level"                
+                Command="{Binding ToggleAllLogLevel}"
+                IsOn="{Binding Source = {x:Static properties:Settings.Default}, Path=AllLogLevel}"
+                Style="{StaticResource MahApps.Styles.ToggleSwitch}" />
+
+
+        <StackPanel Orientation="Vertical">
+            <Slider x:Name="SliberMBLogs" 
+                    Margin="15" 
+                    Style="{DynamicResource FlatSlider}" 
+                    LargeChange="5" 
+                    Minimum="5" 
+                    SmallChange="5" 
+                    Value="{Binding Source = {x:Static properties:Settings.Default}, Path=MBLogsSize}" 
+                    ValueChanged="SliberMBLogs_ValueChanged" 
+                    TickFrequency="5"
+                    />
+            <Label Name="lblMBvalue" 
+                   Content="{Binding Source = {x:Static properties:Settings.Default}, 
+                        Path=MBLogsSize}"
+                   ContentStringFormat="{}{0} Mb"
+                   ToolTip="Size the log file"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   FontSize="20"/>
+        </StackPanel>
+    </StackPanel>
+
+</UserControl>

@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <Import Project="..\common.csproj" />
+  
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+
+    <RootNamespace>ApplicationUI</RootNamespace>
+    <AssemblyName>UltimateChangerV</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!--<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\_Results\Debug\App\</OutputPath>-->
+
+
+    <PublishUrl>\\10.128.3.1\DFS_data_SSC_FS_Images-SSC\paze\change_market\UC_V\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en-US</TargetCulture>
+    <ProductName>Ultimate Changer V</ProductName>
+    <PublisherName>PAZE</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+  </PropertyGroup>
+
+   <ItemGroup>
+    <Resource Include="Views\Images\not_installed.png" />
+    <Resource Include="Views\Images\medical.ico" />
+    <Resource Include="Views\Images\Oasis.ico" />
+    <Resource Include="Views\Images\genie.bmp" />
+    <Resource Include="Views\Images\medical2.bmp" />
+    <Resource Include="Views\Images\hearSuite.ico" />
+    <Resource Include="Views\Images\noah4.jpg" />
+    <Resource Include="Views\Images\EXPRESSfitPRO.ico" />
+    <Resource Include="Views\Images\NewPreconditioner.ico" />
+    <Resource Include="Views\Images\gearbox.png" />
+    <Resource Include="Views\Images\gearbox_transparent.png" />
+    <Resource Include="icon.ico" />
+    <SplashScreen Include="UC_V_Splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.WpfToolkit.DataVisualization">
+      <Version>6.0.79</Version>
+    </PackageReference>
+    <PackageReference Include="FontAwesome">
+      <Version>4.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>2.0.0-alpha0748</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks">
+      <Version>3.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.19</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileOperator\FileOperator.csproj" />
+    <ProjectReference Include="..\FittingSoftwareEnums\FittingSoftwareEnums.csproj" />
+    <ProjectReference Include="..\FittingSoftware\FittingSoftware.csproj" />
+    <ProjectReference Include="..\HIs\HIs.csproj" />
+    <ProjectReference Include="..\LogSettingsOptions\LogSettingsOptions.csproj" />
+    <ProjectReference Include="..\Manufacturer\Manufacturer.csproj" />
+    <ProjectReference Include="..\MarketManager\MarketManager.csproj" />
+    <ProjectReference Include="..\PathFinder\PathFinder.csproj" />
+    <ProjectReference Include="..\PathsManager\PathsManager.csproj" />
+    <ProjectReference Include="..\ProcessManager\ProcessManager.csproj" />
+    <ProjectReference Include="..\Statistics\Statistics.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+
+</Project>
