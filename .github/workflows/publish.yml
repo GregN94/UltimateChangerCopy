@@ -1,7 +1,5 @@
 name: Publish
 
-on: [push]
-
 jobs:
   build:
 
