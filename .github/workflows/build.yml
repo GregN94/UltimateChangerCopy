@@ -10,11 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       
-    - name: Restore necessary NUget packages
+    - name: Restore necessary Nuget packages
       run: dotnet restore ApplicationUI
       
     - name: Debug build
-      run: dotnet build ApplicationUI /property:Configuration=Debug
+      run: dotnet build ApplicationUI --configuration Debug
       
     - name: Release build
-      run: dotnet build ApplicationUI /property:Configuration=Release
+      run: dotnet build ApplicationUI --configuration Release
